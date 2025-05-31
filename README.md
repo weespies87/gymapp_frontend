@@ -1,4 +1,6 @@
-Welcome to your new TanStack app! 
+playground for gymapp, while working on backendcloud flare see backend at https://github.com/weespies87/gymapp
+
+Written with TANSTACK TAILWIND AND SHADCN 
 
 # Getting Started
 

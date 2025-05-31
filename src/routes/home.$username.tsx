@@ -300,7 +300,7 @@ const PostWorkoutData = async () => {
       await Promise.all(remainingPromises);
     }
 
-    // Display AI response to user
+    // TODO REMOVE OR MAKE OPTIONAL Display AI response to user 
     if (aiResponse) {
       toast(aiResponse, {
         duration: Infinity,
@@ -751,12 +751,12 @@ const PostWorkoutData = async () => {
                     )}
                   </TableBody>
                 </Table>
-
+                {/* TODO this is temp holding for ai prompts */}
+                <span className="flex justify-center"> --- </span>
                 <span className="flex justify-center">Gim Says</span>
-                <span>{gimmresponse || "Start Your Workout!"}</span>
-
+                <span className="flex justify-center">{gimmresponse || "Start Your Workout!"}</span>
+                <span className="flex justify-center"> --- </span>
                 {/* <Textarea placeholder={gimmresponse || "Start Your Workout!"} /> */}
-
               </div>
             </div>
           </CardContent>
