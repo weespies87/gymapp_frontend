@@ -16,14 +16,14 @@ import { useAuth } from "@/auth/AuthContext";
 import { toast } from "sonner";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import CollisionTitle from "../components/animations/cardtitle";
-import { Textarea } from "@/components/ui/textarea";
+import { motion, AnimatePresence } from "motion/react"
 import FloatingHelp from "../components/ui/floatinghelp";
 
-//region export route
 export const Route = createFileRoute("/home/$username")({
   component: App,
 });
 
+//region types
 type UserWorkout = {
   id: number;
   activity: string;
@@ -67,6 +67,7 @@ type UserCardio = {
   second: number;
 };
 
+//region function
 function App() {
   // State declarations should be inside the component
   const { user, logout } = useAuth();
@@ -260,7 +261,6 @@ function App() {
 
   const PostWorkoutData = async () => {
     try {
-      // Option 1: Get AI response from the first set only (recommended)
       const firstSetResponse = await fetch(`/api/addWorkoutRoutine`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -295,20 +295,19 @@ function App() {
                 sets: "1",
                 reps: set.reps,
                 weight: set.weight,
-                setNumber: index + 2, // index + 2 because we start from the second set
+                setNumber: index + 2,
               }),
             });
           });
 
-        // Wait for remaining sets to complete
         await Promise.all(remainingPromises);
       }
 
       // TODO REMOVE OR MAKE OPTIONAL Display AI response to user
       if (aiResponse) {
-        toast(aiResponse, {
-          duration: Infinity,
-        });
+        // toast(aiResponse, {
+        //   duration: Infinity,
+        // });
       }
 
       // Fetch updated workout data
@@ -392,40 +391,6 @@ function App() {
     });
   };
 
-  // const handleActivityInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const input = e.target.value;
-
-  //   // Update workout form state
-  //   setNewWorkout({ ...newWorkout, activity: input });
-
-  //   if (input.length > 0) {
-  //     // Create a Set to avoid duplicate suggestions
-  //     const uniqueActivities = new Set<string>();
-
-  //     // Filter AllWorkouts that match the input
-  //     AllWorkouts.forEach(workout => {
-  //       if (workout.activity &&
-  //         workout.activity.toLowerCase().includes(input.toLowerCase())) {
-  //         uniqueActivities.add(workout.activity);
-  //       }
-  //     });
-
-  //     // Convert Set back to array and update suggestions
-  //     setActivitySuggestions(Array.from(uniqueActivities));
-  //     setShowSuggestions(true);
-  //   } else {
-  //     // Clear suggestions if input is empty
-  //     setActivitySuggestions([]);
-  //     setShowSuggestions(false);
-  //   }
-  // };
-
-  // Function to handle suggestion selection
-  // const selectSuggestion = (suggestion: string) => {
-  //   setNewWorkout({ ...newWorkout, activity: suggestion });
-  //   setShowSuggestions(false);
-  // };
-
   return (
     <ProtectedRoute>
       <div className="bg-gradient-to-r from-[#6D51A5] to-[#E4A7C5] home-container flex flex-col items-center min-h-svh bg-gray-100 p-4 overflow-y-auto">
@@ -434,214 +399,248 @@ function App() {
             <CollisionTitle username={username} />
           </CardHeader>
           <CardContent>
-            <div className="grid w-full items-center gap-4">
+            <div className="grid items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Button
-                  className="flex flex-col space-y-1.5 bg-[#7F96FF] hover:bg-[#320E3B]"
-                  onClick={() => setShowWorkoutForm(!showWorkoutForm)}
+                <motion.div
+                  className="flex justify-center w-full"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.982 }}
                 >
-                  Add Workout
-                </Button>
-                <Button
-                  className="flex flex-col space-y-1.5 bg-[#7F96FF] hover:bg-[#320E3B]"
-                  onClick={() => setShowCardioForm(!showCardioForm)}
+                  <Button
+                    className="flex flex-col space-y-1.5 bg-[#7F96FF] hover:bg-[#320E3B] w-full"
+                    onClick={() => setShowWorkoutForm(!showWorkoutForm)}
+                  >
+                    Add Workout
+                  </Button>
+                </motion.div>
+                <motion.div
+                  className="flex justify-center w-full"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  Add Cardio
-                </Button>
-                <Button
-                  className="flex flex-col space-y-1.5 bg-[#7F96FF] hover:bg-[#320E3B]"
-                  onClick={GoToStatus}
+                  <Button
+                    className="flex flex-col space-y-1.5 bg-[#7F96FF] hover:bg-[#320E3B] w-full"
+                    onClick={() => setShowCardioForm(!showCardioForm)}
+                  >
+                    Add Cardio
+                  </Button>
+                </motion.div>
+                <motion.div
+                  className="flex justify-center w-full"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.982 }}
                 >
-                  Stats(WIP)
-                </Button>
-                <Button
-                  className="flex flex-col space-y-1.5 bg-[#7F96FF] hover:bg-[#320E3B]"
-                  onClick={GoToProfile}
+                  <Button
+                    className="flex flex-col space-y-1.5 bg-[#7F96FF] hover:bg-[#320E3B] w-full"
+                    onClick={GoToStatus}
+                  >
+                    Stats(WIP)
+                  </Button>
+                </motion.div>
+                <motion.div
+                  className="flex justify-center w-full"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.982 }}
                 >
-                  Measurements
-                </Button>
-                <Button
-                  className="flex flex-col space-y-1.5 bg-[#7F96FF] hover:bg-[#320E3B]"
-                  onClick={GoTohistory}
+                  <Button
+                    className="flex flex-col space-y-1.5 bg-[#7F96FF] hover:bg-[#320E3B] w-full"
+                    onClick={GoToProfile}
+                  >
+                    Measurements
+                  </Button>
+                </motion.div>
+                <motion.div
+                  className="flex justify-center w-full"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.982 }}
                 >
-                  Previous Workouts
-                </Button>
+                  <Button
+                    className="flex flex-col space-y-1.5 bg-[#7F96FF] hover:bg-[#320E3B] w-full"
+                    onClick={GoTohistory}
+                  >
+                    Previous Workouts
+                  </Button>
+                </motion.div>
               </div>
 
               {/* Workout Form */}
-              {showWorkoutForm && (
-                <div className="flex flex-col space-y-2 p-2 border rounded">
-                  <Label htmlFor="activity">Activity</Label>
-                  <div className="relative">
-                    <Input
-                      id="activity"
-                      value={newWorkout.activity}
-                      onChange={(e) => {
-                        // Update workout form state
-                        setNewWorkout({
-                          ...newWorkout,
-                          activity: e.target.value,
-                        });
-
-                        // Filter suggestions based on input
-                        const input = e.target.value;
-                        if (input.length > 0) {
-                          // Create a Set to avoid duplicate suggestions
-                          const uniqueActivities = new Set<string>();
-
-                          // Filter AllWorkouts that match the input
-                          AllWorkouts.forEach((workout) => {
-                            if (
-                              workout.activity &&
-                              workout.activity
-                                .toLowerCase()
-                                .includes(input.toLowerCase())
-                            ) {
-                              uniqueActivities.add(workout.activity);
-                            }
-                          });
-
-                          // Convert Set back to array and update suggestions
-                          setActivitySuggestions(Array.from(uniqueActivities));
-                          setShowSuggestions(true);
-                        } else {
-                          // Clear suggestions if input is empty
-                          setActivitySuggestions([]);
-                          setShowSuggestions(false);
-                        }
-                      }}
-                      placeholder="e.g., Bench Press"
-                      autoComplete="off"
-                      onBlur={() => {
-                        // Delay hiding suggestions to allow for clicks
-                        setTimeout(() => setShowSuggestions(false), 200);
-                      }}
-                      onFocus={() => {
-                        // Show suggestions again on focus if we have input
-                        if (newWorkout.activity.length > 0) {
-                          setShowSuggestions(true);
-                        }
-                      }}
-                    />
-
-                    {/* Suggestions dropdown */}
-                    {showSuggestions && activitySuggestions.length > 0 && (
-                      <div className="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
-                        <ul className="py-1">
-                          {activitySuggestions.map((suggestion, index) => (
-                            <li
-                              key={index}
-                              className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
-                              onClick={() => {
-                                setNewWorkout({
-                                  ...newWorkout,
-                                  activity: suggestion,
-                                });
-                                setShowSuggestions(false);
-
-                                const matchingWorkout = AllWorkouts.find(
-                                  (w) => w.activity === suggestion
-                                );
-                                // if (matchingWorkout) {
-                                //   setNewWorkout({
-                                //     activity: matchingWorkout.activity,
-                                //     sets: matchingWorkout.sets || newWorkout.sets,
-                                //     reps: matchingWorkout.reps || newWorkout.reps,
-                                //     weight: Number(matchingWorkout.weight) || newWorkout.weight
-                                //   });
-                                // }
-                              }}
-                            >
-                              {suggestion}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-
-                  <Label htmlFor="sets">Sets</Label>
-                  <Input
-                    id="sets"
-                    value={newWorkout.sets}
-                    onChange={(e) => updateSetInputs(e.target.value)}
-                    placeholder="e.g., 3"
-                    type="number"
-                    min="1"
-                  />
-
-                  {newWorkout.setDetails.length > 0 && (
-                    <div className="space-y-4 mt-4">
-                      <Label>Set Details</Label>
-                      {newWorkout.setDetails.map((set, index) => (
-                        <div
-                          key={index}
-                          className="flex space-x-2 p-2 border rounded"
-                        >
-                          <div className="flex-none w-12 flex items-center justify-center font-bold">
-                            Set {index + 1}
-                          </div>
-                          <div className="flex-1">
-                            <Label
-                              htmlFor={`reps-${index}`}
-                              className="text-xs"
-                            >
-                              Reps
-                            </Label>
-                            <Input
-                              id={`reps-${index}`}
-                              value={set.reps}
-                              onChange={(e) => {
-                                const newSetDetails = [
-                                  ...newWorkout.setDetails,
-                                ];
-                                newSetDetails[index].reps = e.target.value;
-                                setNewWorkout({
-                                  ...newWorkout,
-                                  setDetails: newSetDetails,
-                                });
-                              }}
-                              placeholder="e.g., 10"
-                            />
-                          </div>
-                          <div className="flex-1">
-                            <Label
-                              htmlFor={`weight-${index}`}
-                              className="text-xs"
-                            >
-                              Weight (Kgs)
-                            </Label>
-                            <Input
-                              id={`weight-${index}`}
-                              value={set.weight}
-                              onChange={(e) => {
-                                const newSetDetails = [
-                                  ...newWorkout.setDetails,
-                                ];
-                                newSetDetails[index].weight = Number(
-                                  e.target.value
-                                );
-                                setNewWorkout({
-                                  ...newWorkout,
-                                  setDetails: newSetDetails,
-                                });
-                              }}
-                              placeholder="e.g., 135"
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  <Button
-                    onClick={handleAddWorkout}
-                    className="mt-2 bg-[#7F96FF] hover:bg-[#320E3B]"
+              <AnimatePresence>
+                {showWorkoutForm && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0, y: -20 }}
+                    animate={{ opacity: 1, height: "auto", y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -20 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="overflow-hidden"
                   >
-                    Save Workout
-                  </Button>
-                </div>
-              )}
+                    <div className="flex flex-col space-y-2 p-2 border rounded">
+                      <Label htmlFor="activity">Activity</Label>
+                      <div className="relative">
+                        <Input
+                          id="activity"
+                          value={newWorkout.activity}
+                          onChange={(e) => {
+                            // Your existing onChange logic...
+                            setNewWorkout({
+                              ...newWorkout,
+                              activity: e.target.value,
+                            });
+
+                            const input = e.target.value;
+                            if (input.length > 0) {
+                              const uniqueActivities = new Set<string>();
+                              AllWorkouts.forEach((workout) => {
+                                if (
+                                  workout.activity &&
+                                  workout.activity
+                                    .toLowerCase()
+                                    .includes(input.toLowerCase())
+                                ) {
+                                  uniqueActivities.add(workout.activity);
+                                }
+                              });
+                              setActivitySuggestions(Array.from(uniqueActivities));
+                              setShowSuggestions(true);
+                            } else {
+                              setActivitySuggestions([]);
+                              setShowSuggestions(false);
+                            }
+                          }}
+                          placeholder="e.g., Bench Press"
+                          autoComplete="off"
+                          onBlur={() => {
+                            setTimeout(() => setShowSuggestions(false), 200);
+                          }}
+                          onFocus={() => {
+                            if (newWorkout.activity.length > 0) {
+                              setShowSuggestions(true);
+                            }
+                          }}
+                        />
+
+                        {/* Animated Suggestions dropdown */}
+                        <AnimatePresence>
+                          {showSuggestions && activitySuggestions.length > 0 && (
+                            <motion.div
+                              initial={{ opacity: 0, y: -10, scale: 0.982 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: -10, scale: 0.982 }}
+                              transition={{ duration: 0.2 }}
+                              className="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto"
+                            >
+                              <ul className="py-1">
+                                {activitySuggestions.map((suggestion, index) => (
+                                  <motion.li
+                                    key={index}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: index * 0.05 }} // Stagger effect
+                                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                                    onClick={() => {
+                                      setNewWorkout({
+                                        ...newWorkout,
+                                        activity: suggestion,
+                                      });
+                                      setShowSuggestions(false);
+
+                                      const matchingWorkout = AllWorkouts.find(
+                                        (w) => w.activity === suggestion
+                                      );
+                                    }}
+                                  >
+                                    {suggestion}
+                                  </motion.li>
+                                ))}
+                              </ul>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+
+                      <Label htmlFor="sets">Sets</Label>
+                      <Input
+                        id="sets"
+                        value={newWorkout.sets}
+                        onChange={(e) => updateSetInputs(e.target.value)}
+                        placeholder="e.g., 3"
+                        type="number"
+                        min="1"
+                      />
+
+                      {/* Animated Set Details */}
+                      <AnimatePresence>
+                        {newWorkout.setDetails.length > 0 && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="space-y-4 mt-4 overflow-hidden"
+                          >
+                            <Label>Set Details</Label>
+                            {newWorkout.setDetails.map((set, index) => (
+                              <motion.div
+                                key={index}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: index * 0.1 }} // Stagger each set
+                                className="flex space-x-2 p-2 border rounded"
+                              >
+                                <div className="flex-none w-12 flex items-center justify-center font-bold">
+                                  Set {index + 1}
+                                </div>
+                                <div className="flex-1">
+                                  <Label htmlFor={`reps-${index}`} className="text-xs">
+                                    Reps
+                                  </Label>
+                                  <Input
+                                    id={`reps-${index}`}
+                                    value={set.reps}
+                                    onChange={(e) => {
+                                      const newSetDetails = [...newWorkout.setDetails];
+                                      newSetDetails[index].reps = e.target.value;
+                                      setNewWorkout({
+                                        ...newWorkout,
+                                        setDetails: newSetDetails,
+                                      });
+                                    }}
+                                    placeholder="e.g., 10"
+                                  />
+                                </div>
+                                <div className="flex-1">
+                                  <Label htmlFor={`weight-${index}`} className="text-xs">
+                                    Weight (Kgs)
+                                  </Label>
+                                  <Input
+                                    id={`weight-${index}`}
+                                    value={set.weight}
+                                    onChange={(e) => {
+                                      const newSetDetails = [...newWorkout.setDetails];
+                                      newSetDetails[index].weight = Number(e.target.value);
+                                      setNewWorkout({
+                                        ...newWorkout,
+                                        setDetails: newSetDetails,
+                                      });
+                                    }}
+                                    placeholder="e.g., 135"
+                                  />
+                                </div>
+                              </motion.div>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      <Button
+                        onClick={handleAddWorkout}
+                        className="mt-2 bg-[#7F96FF] hover:bg-[#320E3B]"
+                      >
+                        Save Workout
+                      </Button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {/* Cardio Form */}
               {showCardioForm && (
@@ -790,12 +789,12 @@ function App() {
                   </TableBody>
                 </Table>
                 {/* TODO this is temp holding for ai prompts */}
-                <span className="flex justify-center"> --- </span>
-                <span className="flex justify-center">Gim Says</span>
-                <span className="flex justify-center">
+                <span className="flex justify-center w-full"> --- </span>
+                <span className="flex justify-center w-full">Gim Says</span>
+                <span className="flex justify-center w-full">
                   {gimmresponse || "Start Your Workout!"}
                 </span>
-                <span className="flex justify-center"> --- </span>
+                <span className="flex justify-center w-full"> --- </span>
                 {/* <Textarea placeholder={gimmresponse || "Start Your Workout!"} /> */}
               </div>
             </div>

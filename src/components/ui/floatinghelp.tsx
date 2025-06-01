@@ -166,7 +166,7 @@ export default function FloatingHelp() {
                         </div>
                         <div className="grid gap-4">
                             <div className="flex items-center justify-between">
-                                <Label htmlFor="ai-toggle">AI Suggestions</Label>
+                                <Label htmlFor="ai-toggle">AI Auto Suggestions</Label>
                                 <ToggleGroup
                                     type="single"
                                     value={aiState}
@@ -182,16 +182,13 @@ export default function FloatingHelp() {
                                 </ToggleGroup>
                             </div>
                             
-                            {aiState === 'on' && (
                                 <Button 
                                     onClick={fetchAISuggestion}
-                                    className="w-full"
-                                    variant="default"
+                                    className="w-full bg-[#7F96FF] hover:bg-[#320E3B]"
                                 >
                                     <Dumbbell className="h-4 w-4 mr-2" />
                                     Get Workout Suggestion
                                 </Button>
-                            )}
                         </div>
                     </div>
                 </PopoverContent>
