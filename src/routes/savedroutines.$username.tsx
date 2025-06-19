@@ -49,7 +49,7 @@ interface UserData {
 
 interface TodaysWorkout {
   id: number;
-  user: string; // This is a stringified JSON
+  user: string; 
   activity: string;
   sets: number;
   reps: number;
@@ -71,7 +71,7 @@ interface ChartDataPoint {
 // New interface for the stacked chart
 interface ExerciseBreakdown {
   category: string;
-  [key: string]: number | string; // For exercise types and their counts
+  [key: string]: number | string;
 }
 
 type TimeRangeOption = "7d" | "30d" | "90d";
@@ -115,7 +115,6 @@ function RouteComponent(): React.ReactElement {
     "Other": "#00C49F"
   };
 
-  // Map exercise to category
   const categorizeExercise = (exercise: string): string => {
     const lowerCaseExercise = exercise.toLowerCase();
 
@@ -260,7 +259,7 @@ function RouteComponent(): React.ReactElement {
       day.setDate(today.getDate() - i);
 
       const dateStr = day.toISOString().split('T')[0]; // YYYY-MM-DD format
-      const displayDate = day.toLocaleDateString('en-US', { weekday: 'short' }); // e.g., "Mon"
+      const displayDate = day.toLocaleDateString('en-US', { weekday: 'short' }); // changes to day e.g. monday
 
       days.push({
         date: dateStr,
