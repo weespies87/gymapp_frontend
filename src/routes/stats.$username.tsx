@@ -19,10 +19,10 @@ import {
   Line,
   LineChart,
   XAxis,
-  YAxis,        // Add this if you're using YAxis
-  Legend,       // Add this if you're using Legend
-  Tooltip,      // Add this if you're using Tooltip
-  ResponsiveContainer  // Add this for responsive charts
+  YAxis,
+  Legend,
+  Tooltip,
+  ResponsiveContainer
 } from "recharts"; import {
   ChartContainer,
   ChartTooltip,
@@ -131,7 +131,7 @@ function UserStats() {
             </CardContent>
           </Card>
 
-          {/* Second card with improved chart */}
+          {/* Second card with chart */}
           <Card className="w-full max-w-lg">
             <CardHeader>
               <CardTitle>Weight Chart</CardTitle>
