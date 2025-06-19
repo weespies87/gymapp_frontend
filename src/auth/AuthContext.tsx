@@ -39,8 +39,7 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
-// In a real application, you would replace these API calls with your actual authentication backend
-const API_URL = "/api/auth"; // Replace with your API endpoint
+const API_URL = "/api/auth";
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -88,10 +87,8 @@ const login = async (email: string, password: string) => {
       body: JSON.stringify({ email, password }),
     });
     
-    // Read the response body as text first
     const responseText = await response.text();
     
-    // Then try to parse it as JSON
     let data;
     try {
       data = responseText ? JSON.parse(responseText) : {};
@@ -102,8 +99,7 @@ const login = async (email: string, password: string) => {
     if (!response.ok) {
       throw new Error(data.message || "Login failed");
     }
-    
-    // Store the complete user object
+    //TODO COOKIES
     localStorage.setItem("authToken", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
     
@@ -122,19 +118,6 @@ const login = async (email: string, password: string) => {
       setIsLoading(true);
       setError(null);
 
-      // For demo purposes - in a real app, make a fetch request to your backend
-      // const response = await fetch(`${API_URL}/register`, {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ email, password, name }),
-      // });
-
-      // if (!response.ok) {
-      //   const errorData = await response.json();
-      //   throw new Error(errorData.message || "Registration failed");
-      // }
-
-      // Simulate a successful registration and login for demo
       const mockUser = {
         id: "user-" + Date.now(),
         email: email,
@@ -157,7 +140,7 @@ const login = async (email: string, password: string) => {
   };
 
   const logout = () => {
-    // Clear storage and state
+    // TODO COOKIES
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
     setUser(null);
